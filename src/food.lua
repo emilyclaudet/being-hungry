@@ -73,9 +73,11 @@ end
 function end_game_state()
 	if state == 'greedy' then
 		draw_greedy_screen()
+		playerDeathSound:play()
 	end
 	if state == 'starve' then
 		draw_starve_screen()
+		playerDeathSound:play()
 	end
 end
 

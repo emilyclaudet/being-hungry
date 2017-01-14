@@ -13,6 +13,8 @@ function love.load()
 	playerWidth = 32
 	playerHeight = 32
 	playerSpeed = 200
+
+	playerDeathSound = love.audio.newSource("res/dogwhine.mp3")
 	-- Hunger level
 	Hunger = 100
 	-- Starting time
