@@ -1,7 +1,8 @@
--- Being hungry prototype
+-- Being hungry game prototype
 require 'food'
 
 function love.load()
+	state = 'play'
 	screenWidth = love.graphics.getWidth()
 	screenHeight = love.graphics.getHeight()
 	-- Player 
@@ -9,14 +10,22 @@ function love.load()
 	playerSprite = love.graphics.newQuad(0, 0, 32, 32, player:getDimensions())
 	playerX = 100
 	playerY = 500
+	playerWidth = 32
+	playerHeight = 32
 	playerSpeed = 200
 	-- Hunger level
 	Hunger = 50
+	-- Starting time
+	elapsedTime = 0
 	-- Load food
 	load_food()
 end
 
 function love.update(dt)
+	if state ~= 'play' then
+		return 
+	end
+
 	if love.keyboard.isDown('left') then
 		playerX = playerX - (playerSpeed * dt)
 	end
@@ -34,15 +43,11 @@ function love.update(dt)
 	end
 
 	if love.keyboard.isDown('space') then
-		-- calls eating animation
+	-- calls eating animation?
 	end
-
+	get_hungry()
 	update_food()
-
-end
-
-function updateHunger()
-	Hunger = Hunger + meatLevel
+	check_player_hunger()
 end
 
 function love.keyreleased(key)
@@ -67,6 +72,8 @@ function love.draw()
 	-- Title for Hungry level
 	love.graphics.setColor(5, 180, 15)
 	love.graphics.print("HUNGER LEVEL", 20, 20, 0, 1.2,1.2)
+	-- Draw if end of game
+	end_game_state()
 end
 
 function love.quit()
