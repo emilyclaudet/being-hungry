@@ -13,7 +13,7 @@ function load_food()
 
 	-- Creating the food around the map
 	food = {} --This table contains all the food
-	for i=1, 8 do -- Puts food in random positions
+	for i=1, 15 do -- Puts food in random positions
 		food[i] = {
 			meatX = math.random(love.graphics.getWidth()),
 			meatY = math.random(love.graphics.getHeight()),
@@ -37,7 +37,7 @@ end
 function get_hungry(dt)
 	elapsedTime = elapsedTime + 1
 	if (elapsedTime > 0.1) then
-    	Hunger = Hunger - 0.2
+    	Hunger = Hunger - 0.15
     else
         elapsedTime = 0
     end
@@ -80,12 +80,27 @@ function end_game_state()
 end
 
 function draw_greedy_screen()
-	love.graphics.setColor(0, 0, 0)
-	love.graphics.print("You died of over-eating!", 200, 200, 0, 2, 2)
+	love.graphics.reset()
+	-- love.graphics.print("You died of over-eating!", 200, 200, 0, 2, 2)
+	love.graphics.draw(greedyScreen, 50, 50, 0)
 end
 
 function draw_starve_screen()
-	love.graphics.setColor(0, 0, 0)
-	love.graphics.print("You died of starvation!", 200, 200, 0, 2, 2)
+	love.graphics.reset()
+	-- love.graphics.print("You died of starvation!", 200, 200, 0, 2, 2)
+	love.graphics.draw(starveScreen, 50, 50, 0)
 end
 
+function draw_start_screen()
+	love.graphics.reset()
+	-- love.graphics.print("You died of over-eating!", 200, 200, 0, 2, 2)
+	love.graphics.draw(startScreen, 50, 50, 0)
+end
+
+function start_game_state()
+	if state == 'start' then 
+		draw_start_screen()
+	else
+		return 0
+	end
+end

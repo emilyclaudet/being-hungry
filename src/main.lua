@@ -14,11 +14,15 @@ function love.load()
 	playerHeight = 32
 	playerSpeed = 200
 	-- Hunger level
-	Hunger = 50
+	Hunger = 100
 	-- Starting time
 	elapsedTime = 0
 	-- Load food
 	load_food()
+	-- Load Game State
+	startScreen = love.graphics.newImage("res/startScreen.png")
+	starveScreen = love.graphics.newImage("res/pugStarve.png")
+	greedyScreen = love.graphics.newImage("res/pugOvereat.png")
 end
 
 function love.update(dt)
@@ -56,6 +60,12 @@ function love.keyreleased(key)
 	end
 end
 
+function love.keypressed(key)
+    if key == 'return' then
+   		state = 'play'
+    end
+end
+
 function love.draw()
 	-- Background
 	love.graphics.setColor(255, 255, 255)
@@ -72,6 +82,8 @@ function love.draw()
 	-- Title for Hungry level
 	love.graphics.setColor(5, 180, 15)
 	love.graphics.print("HUNGER LEVEL", 20, 20, 0, 1.2,1.2)
+	-- Draw if start of game
+	-- draw_start_screen()
 	-- Draw if end of game
 	end_game_state()
 end
