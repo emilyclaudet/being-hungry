@@ -49,6 +49,8 @@ function love.draw()
 	-- Background
 	love.graphics.setColor(255, 255, 255)
 	love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
+	-- Player
+	draw_player()
 	-- Food
 	draw_food()
 	-- Hunger level
@@ -60,7 +62,6 @@ function love.draw()
 	love.graphics.setColor(5, 180, 15)
 	love.graphics.print("HUNGER LEVEL", 20, 20, 0, 1.2,1.2)
 
-	draw_player()
 	-- Draw if end of game
 	end_game_state()
 end

@@ -2,7 +2,7 @@ function load_food()
 	-- Food
 	foodImage = love.graphics.newImage("res/food.png")
 	meatImage = love.graphics.newQuad(0, 0, 32, 32, foodImage:getDimensions())
-	meatLevel = 10
+	foodLevel = 25
 
 	fishImage = love.graphics.newQuad(32, 0, 32, 32, foodImage:getDimensions())
 	fishX = 400
@@ -12,13 +12,13 @@ function load_food()
 	collectionSound = love.audio.newSource("res/collectfood.wav")
 
 	-- Creating the food around the map
-	food = {} --This table contains all the food
-	for i=1, 15 do -- Puts food in random positions
+	food = {} --This table contains all the food sizes and positions
+	for i=1, 10 do -- Puts food in random positions
 		food[i] = {
-			meatX = math.random(love.graphics.getWidth()),
-			meatY = math.random(love.graphics.getHeight()),
-			meatWidth = 28,
-			meatHeight = 28
+			foodX = math.random(love.graphics.getWidth()),
+			foodY = math.random(love.graphics.getHeight()),
+			foodWidth = 28,
+			foodHeight = 28
 		}
 	end
 end
@@ -26,12 +26,23 @@ end
 function update_food(dt)
 	-- When player collides with the food, remove food from ground and add to hunger 
 	for i,v in ipairs(food) do -- First loop through the food table
-		if eat_food(playerX, playerY, playerWidth, playerHeight, v.meatX, v.meatY, v.meatWidth, v.meatHeight) then -- for each food position check if it's overlapping with player
+		if eat_food(playerX, playerY, playerWidth, playerHeight, v.foodX, v.foodY, v.foodWidth, v.foodHeight) then -- for each food position check if it's overlapping with player
 			table.remove(food, i) --This removes the current food from the food table
-			Hunger = Hunger + 25 -- Updates hunger level
+			Hunger = Hunger + foodLevel -- Updates hunger level for food
 			collectionSound:play()
+			generate_food()
+			table.insert(food, newFood)
 		end
 	end
+end
+
+function generate_food()
+		newFood = {
+			foodX = math.random(love.graphics.getWidth()),
+			foodY = math.random(love.graphics.getHeight()),
+			foodWidth = 28,
+			foodHeight = 28
+		}
 end
 
 function get_hungry(dt)
@@ -56,9 +67,9 @@ function draw_food()
 	-- draw Fish
 	love.graphics.draw(foodImage, fishImage, fishX, fishY)
 
-	--Drawing the food / meat
+	--Drawing the food
 	for i,v in ipairs(food) do
-		love.graphics.draw(foodImage, meatImage, v.meatX, v.meatY)
+		love.graphics.draw(foodImage, meatImage, v.foodX, v.foodY)
 	end
 end
 
