@@ -37,7 +37,7 @@ end
 function get_hungry(dt)
 	elapsedTime = elapsedTime + 1
 	if (elapsedTime > 0.1) then
-    	Hunger = Hunger - 0.15
+    	Hunger = Hunger - 0.2
     else
         elapsedTime = 0
     end
@@ -95,7 +95,6 @@ end
 
 function draw_start_screen()
 	love.graphics.reset()
-	-- love.graphics.print("You died of over-eating!", 200, 200, 0, 2, 2)
 	love.graphics.draw(startScreen, 50, 50, 0)
 end
 

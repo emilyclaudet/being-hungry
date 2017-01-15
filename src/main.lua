@@ -1,26 +1,22 @@
--- Being hungry game prototype
+-- Being hungry game - originally written at Berlin Mini Game Jam - 14 January 
+
 require 'food'
+require 'player'
 
 function love.load()
 	state = 'play'
 	screenWidth = love.graphics.getWidth()
 	screenHeight = love.graphics.getHeight()
-	-- Player 
-	player = love.graphics.newImage("res/pug1.png")
-	playerSprite = love.graphics.newQuad(0, 0, 32, 32, player:getDimensions())
-	playerX = 100
-	playerY = 500
-	playerWidth = 32
-	playerHeight = 32
-	playerSpeed = 200
 
-	playerDeathSound = love.audio.newSource("res/dogwhine.mp3")
+	-- load player
+	load_player()
+	-- Load food
+	load_food()
+
 	-- Hunger level
 	Hunger = 100
 	-- Starting time
 	elapsedTime = 0
-	-- Load food
-	load_food()
 	-- Load Game State
 	startScreen = love.graphics.newImage("res/startScreen.png")
 	starveScreen = love.graphics.newImage("res/pugStarve.png")
@@ -31,26 +27,7 @@ function love.update(dt)
 	if state ~= 'play' then
 		return 
 	end
-
-	if love.keyboard.isDown('left') then
-		playerX = playerX - (playerSpeed * dt)
-	end
-
-	if love.keyboard.isDown('right') then
-		playerX = playerX + (playerSpeed * dt)
-	end
-
-	if love.keyboard.isDown('up') then
-		playerY = playerY - (playerSpeed * dt)
-	end
-
-	if love.keyboard.isDown('down') then
-		playerY = playerY + (playerSpeed * dt)
-	end
-
-	if love.keyboard.isDown('space') then
-	-- calls eating animation?
-	end
+	player_input(dt)
 	get_hungry()
 	update_food()
 	check_player_hunger()
@@ -74,8 +51,6 @@ function love.draw()
 	love.graphics.rectangle("fill", 0, 0, screenWidth, screenHeight)
 	-- Food
 	draw_food()
-	-- Player
-	love.graphics.draw(player, playerSprite, playerX, playerY)
 	-- Hunger level
 	love.graphics.setColor(255, 0, 0)
 	love.graphics.rectangle("fill", 20, 40, 160, 20, 2, 2)
@@ -84,8 +59,8 @@ function love.draw()
 	-- Title for Hungry level
 	love.graphics.setColor(5, 180, 15)
 	love.graphics.print("HUNGER LEVEL", 20, 20, 0, 1.2,1.2)
-	-- Draw if start of game
-	-- draw_start_screen()
+
+	draw_player()
 	-- Draw if end of game
 	end_game_state()
 end
